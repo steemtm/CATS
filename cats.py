@@ -28,7 +28,7 @@ if __name__ == "__main__":
     blacklist = ["market", "tokens"]
     last_steem_block = 1950  # It is a good idea to store this block, otherwise all transfers will be checked again
     while True:
-        dragon_token = wallet.get_token("CATS")
+        main_token = wallet.get_token("CATS")
         history = api.get_history(upvote_account, upvote_token, limit=1000, offset=0, histtype='user')
         for h in history:
             if int(h["block"]) <= last_steem_block:
@@ -52,7 +52,7 @@ if __name__ == "__main__":
                 print(wallet.transfer(h["from"], float(h["quantity"]), "KITTENS", "Refund - Amount must be a multiple of the current ratio!"))
                 print("refund sent...")
                 continue
-            if dragon_token is not None and float(dragon_token["balance"]) >= 1:
-                print("balance %.2f" % float(dragon_token["balance"]))
+            if main_token is not None and float(main_token["balance"]) >= 1:
+                print("balance %.2f" % float(main_token["balance"]))
                 print(wallet.transfer(h["from"], float(h["quantity"]) / kitten_ratio, "CATS", "Here are your CATS!"))
         time.sleep(4)
